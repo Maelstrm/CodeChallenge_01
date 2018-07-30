@@ -30,7 +30,6 @@ function eventHandlers() {
 
 // Generate Click
 function generateClick() {
-
     // Updates counter
     clickCounter();
 
@@ -60,24 +59,21 @@ function clickDeleteHandler() {
 } // End clickDeleteHandler
 
 function swapButtonClick() {
-
     // If the value of red is true...
     if (red) {
         $('#clickDiv').css('background-color', 'yellow');
-        red = false;
-        return red;
     }
 
     // If the value of red is not true
     else {
         $('#clickDiv').css('background-color', 'red');
-        red = true;
-        return red;
     }
+
+    //changes red boolean to its opposite
+    red = !red;
 }
 
 function deleteButtonClick() {
-
     // Deletes the generate div
     $('#clickDiv').remove();
 
