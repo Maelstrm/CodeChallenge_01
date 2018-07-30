@@ -74,8 +74,8 @@ function swapButtonClick() {
 }
 
 function deleteButtonClick() {
-    // Deletes the generate div
-    $('#clickDiv').remove();
+    // Deletes the its parent div
+    $('#deleteButton').parent().remove();
 
     // Resets the counter
     totalClicks = 0;
