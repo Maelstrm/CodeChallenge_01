@@ -11,9 +11,6 @@
 // Store global variables here
 let totalClicks = 0;
 
-// Keeps track of the clickDiv background color
-let red = true;
-
 // Waits for page to initialize
 $(readyNow);
 
@@ -25,21 +22,21 @@ function readyNow() {
 
 // This is where handlers go.
 function eventHandlers() {
-    $('#generateButton').on('click', generateClick);
+    $('.generateButton').on('click', generateClick);
 } // EventHandlers end
 
 // Generate Click
 function generateClick() {
     // Updates counter
-    clickCounter();
+    let totalclicks = clickCounter();
 
     //Clears the div that holds the counter and its buttons
-    $('#clickDiv').remove;
-    $('#generateParent').append('<div id="clickDiv"></div>');
-    $('#clickDiv').html('<p>' + totalClicks + '</p>');
+    // $('#clickDiv').remove;
+    $('#generateParent').append('<div id="clickDiv' + totalclicks + '" class="divCont"></div>');
+    $('#clickDiv' + totalClicks).html('<p>' + totalClicks + '</p>');
 
     //Appends "Swap" & "Delete" buttons
-    $('#clickDiv').append('<button id="swapButton">Swap</button>' + '<button id="deleteButton">Delete</button>');
+    $('#clickDiv' + totalClicks).append('<button id="sw' + totalClicks + '" class="swapButton">Swap</button>' + '<button id="del' + totalClicks + '" class="deleteButton">Delete</button>');
 
     // Reloads the event handler for "Delete" and "Swap"
     clickDeleteHandler();
@@ -48,36 +45,39 @@ function generateClick() {
 // Tracks the number of clicks
 function clickCounter() {
     totalClicks += 1;
-    return totalClicks;
+    return totalClicks
 } // End clickCounter
 
 
 function clickDeleteHandler() {
     // EventHandlers for "Swap" and "Delete"
-    $('#swapButton').on('click', swapButtonClick);
-    $('#deleteButton').on('click', deleteButtonClick);
+    $('#sw' + totalClicks).on('click', swapButtonClick);
+    $('#del' + totalClicks).on('click', deleteButtonClick);
 } // End clickDeleteHandler
 
 function swapButtonClick() {
-    // If the value of red is true...
-    if (red) {
-        $('#clickDiv').css('background-color', 'yellow');
+    // button starts off in a div that has an undefined bg property
+    // because the bg property is undefined, it will automatically turn red on the first click and add a new property called 'yellow'
+    if (this.bg == undefined) {
+        $(this).closest('div').css('background-color', 'yellow');
+        this.bg = 'yellow';
     }
 
-    // If the value of red is not true
-    else {
-        $('#clickDiv').css('background-color', 'red');
+    // if the property is yellow it will change it to red, and change the bg color
+    else if (this.bg == 'yellow') {
+        $(this).closest('div').css('background-color', 'red');
+        this.bg = 'red';
     }
 
-    //changes red boolean to its opposite
-    red = !red;
+    // if the property is red it will change it to yellow, and change the bg color.
+    else if (this.bg == 'red') {
+        $(this).closest('div').css('background-color', 'yellow');
+        this.bg = 'yellow';
+    }
+
 }
 
 function deleteButtonClick() {
     // Deletes the its parent div
-    $('#deleteButton').parent().remove();
-
-    // Resets the counter
-    totalClicks = 0;
-    return totalClicks;
+    $(this).closest('div').remove();
 } // End deleteButtonClick
